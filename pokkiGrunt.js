@@ -3,70 +3,10 @@ module.exports = function(grunt) {
 
 	// Project configuration.
 	grunt.initConfig({
-		meta: {
-			version: '0.1.0',
-			banner: '/*! PROJECT_NAME - v<%= meta.version %> - ' +
-			'<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-			'* http://PROJECT_WEBSITE/\n' +
-			'* Copyright (c) <%= grunt.template.today("yyyy") %> ' +
-			'YOUR_NAME; Licensed MIT */'
-		},
-		lint: {
-			files: ['grunt.js', '**/*.js']
-		},
-		qunit: {
-			files: ['test/**/*.html']
-		},
-		concat: {
-			dist: {
-				src: ['<banner:meta.banner>', '<file_strip_banner:pokki/test.js>'],
-				dest: 'dist/FILE_NAME.js'
-			}
-		},
-		min: {
-			dist: {
-				src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
-				dest: 'dist/FILE_NAME.min.js'
-			}
-		},
-		watch: {
-			files: '<config:lint.files>',
-			tasks: 'lint qunit'
-		},
-		jshint: {
-			options: {
-				curly: true,
-				eqeqeq: true,
-				immed: true,
-				latedef: true,
-				newcap: true,
-				noarg: true,
-				sub: true,
-				undef: true,
-				boss: true,
-				eqnull: true,
-				browser: true
-			},
-			globals: {
-				pokki:true,
-				console: true
-			}
-		},
-		uglify: {},
-
-		/*
-		svn: {
-			url: 'http://svn.oc/repos/devel/Exchange/Pokkies/TestProject/',
-			username: 'stefano', // --username ARG + --password ARG
-		},*/
-
 		trac: {
 			ticketUrl: 'https://trac-pokki.sea.opencandy.com/ticket/{id}'
 		}
 	});
-
-	// Default task.
-	//grunt.registerTask('default', 'lint qunit concat min');
 
 	var xml2js = require('xml2js');
 
@@ -237,15 +177,29 @@ module.exports = function(grunt) {
 		return manifests;
 	};
 
+	var V = '0.1.17';
+
+	var logo = function() {
+		return [
+			'\n __  (\\_',
+			'(  \\ ( \') ___',
+			' )  \\/_)=(___)  POKKI BUILD SYSTEM',
+			' (_(___)_ \\_/   ' + V + '\n'
+		].join('\n');
+	};
+
+	// Default task.
+	//grunt.registerTask('default', 'lint qunit concat min');
+	grunt.registerTask('default', 'Help', function(version){
+		console.log( logo() );
+		grunt.log.ok('USAGE: pokkibld tag:<version>');
+		grunt.log.ok('i.e.\npokkibld tag:1.0.8');
+	});
 
 	// Tag
 	grunt.registerTask('tag', 'Create a tag', function(version){
 
-		var V = '0.1.16';
-		console.log('\n __  (\\_');
-		console.log('(  \\ ( \') ___');
-		console.log(' )  \\/_)=(___)  POKKI BUILD SYSTEM');
-		console.log(' (_(___)_ \\_/   ' + V + '\n');
+		console.log( logo() );
 
 		if (!version || !version.match(/^\d+\.\d+\.\d+$/)) {
 			grunt.log.error('Invalid version! EXAMPLE: grunt tag:1.0.9');

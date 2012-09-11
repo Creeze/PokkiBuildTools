@@ -1,0 +1,23 @@
+{
+  "name": "pokkibuildtools",
+  "version": "0.1.16",
+  "description": "Create Tags, Release Notes, Shortcuts to TRAC tickets",
+  "main": "grunt.js",
+  "bin":{
+    "pokkibld": "bin/cli.js" 
+  },
+  "dependencies": {
+    "xml2js": "~0.2.0",
+    "grunt": "*"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "postinstall": "echo \"WOOT! Pokki Build Tools installed!\""
+  },
+  "repository": "",
+  "keywords": [
+    "pokki"
+  ],
+  "author": "Stefano Bertacchi <stefano@sweetlabs.com>",
+  "license": "BSD"
+}

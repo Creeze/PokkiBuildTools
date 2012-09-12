@@ -1,6 +1,6 @@
 {
   "name": "pokkibuildtools",
-  "version": "0.1.17",
+  "version": "0.1.19",
   "description": "Create Tags, Release Notes, Shortcuts to TRAC tickets",
   "main": "grunt.js",
   "bin":{

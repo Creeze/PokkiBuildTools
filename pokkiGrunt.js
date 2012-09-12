@@ -177,7 +177,7 @@ module.exports = function(grunt) {
 		return manifests;
 	};
 
-	var V = '0.1.17';
+	var V = '0.1.19';
 
 	var logo = function() {
 		return [
@@ -219,6 +219,10 @@ module.exports = function(grunt) {
 					if (err) {
 						if ((err+'').match(/execvp/)) return cb('Seriously!? you don\'t have SVN command line client?!!!');
 						return cb(err);
+					}
+
+					if (!res.url.match(/\@/)) {
+						return cb('Please checkout using your username.\n i.e. "svn checkout http://john@svn.oc/repos/..."');
 					}
 
 					var username = res.url.split(/[\/\@]+/)[1];

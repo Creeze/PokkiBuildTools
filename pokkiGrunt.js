@@ -177,7 +177,7 @@ module.exports = function(grunt) {
 		return manifests;
 	};
 
-	var V = '0.1.19';
+	var V = '0.1.21';
 
 	var logo = function() {
 		return [
@@ -435,16 +435,23 @@ module.exports = function(grunt) {
 
 			function(tag, cb) {
 
-				grunt.log.ok('Creating tag ' + tag.version);
+				grunt.log.ok('Build Notes:');
 
 				// store release notes in the tag comments too
 				var releaseNotes = tag.releaseNotes.length ? ('- ' + tag.releaseNotes.join('\n- ') + '\n') : '[empty release notes]';
 				var fixedTickets = tag.fixedTickets.length ? ('- ' + tag.fixedTickets.map(function(id){return conf.trac.ticketUrl.replace(/\{id\}/,id);}).join('\n- ') + '\n') : '[empty ticket list]';
 
-				grunt.log.ok('Release Notes:\n' + releaseNotes);
-				grunt.log.ok('Worked Tickets:\n' + fixedTickets);
+				console.log(['',
+					'rev. ' + tag.version + ' (' + grunt.template.today('dddd, m/dd/yyyy, h:MM TT') + ')',
+					svn.getUrl('smoke/' + tag.version) + '\n',
+					'Changelog:',
+					releaseNotes + '\n',
+					'Tickets:',
+					fixedTickets + '\n'
+				].join('\n'));
 
-				svn.copy('creating tag ' + tag.version + ':\n' + releaseNotes, 'trunk', 'smoke/' + tag.version, cb);
+				grunt.log.ok('Creating tag ' + tag.version);
+				svn.copy('creating tag ' + tag.version + ' from trunk:\n' + releaseNotes, 'trunk', 'smoke/' + tag.version, cb);
 
 
 			},
